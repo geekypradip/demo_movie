@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+    <style>
+          body{
+            margin: 0;
+            background: rgba(42, 41, 109, 0.877);
+        }
+        nav{
+            display: flex;
+            background-color: rgb(6, 6, 80);
+            color:#fff;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-weight: bold;
+            position: fixed;
+            top:0;
+            overflow: hidden;
+            width:100%;
+        }
+        nav>.imageHolder{
+            flex: 10%;
+            text-align: center;
+        }
+        nav>.empty{
+            flex:70%;
+          
+        }
+        nav>.loginBtn,nav>.signupBtn{
+            flex:10%;
+            text-align: center;
+            padding-top: 5px;
+
+        }
+        nav>.loginBtn:hover,nav>.signupBtn:hover{
+            border: 1px solid rgb(161, 180, 167);
+        }
+        nav>.signupBtn{
+            background-color: rgb(16, 216, 16);
+            border-radius: 4px;
+        }
+        .container{
+            margin-top: 55px;
+            height: 400px;
+           
+        }
+        .container>img{
+            width:100%;
+            height:100%;
+            background-size: cover;
+         transition: 2s;
+        }
+        .movie_container{
+            display: flex;
+            flex-wrap: wrap;
+            background: rgb(14, 8, 68);
+           
+            margin:auto;
+        }
+        .movie_container>div{
+            flex-basis: 30%;
+            margin:1%;
+           
+            border: 1px solid #fff;
+            color:#fff;
+            background-color: rgba(255, 255, 255, 0.158);
+        }
+        .movie_container>div>img{
+            width:100%;
+            background-size: cover;
+            height: 180px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+     <!-- <img src="image/s1.png" alt=""> -->
+    </div>
+    <div class="movie_container">
+
+    </div>
+    <script>
+let nav=document.createElement("nav")
+            let imageHolder=document.createElement("div");
+            imageHolder.setAttribute("class","imageHolder")
+            let img=document.createElement('img')
+            img.setAttribute('src',"https://s.imgur.com/images/favicon-32x32.png");
+            imageHolder.appendChild(img);
+            let empty=document.createElement('div');
+            empty.setAttribute("class","empty");
+            let loginBtn=document.createElement('div');
+            loginBtn.textContent="Sign in"
+            loginBtn.setAttribute("class","loginBtn");
+            let signupBtn=document.createElement('div');
+            signupBtn.textContent='Sign up'
+            signupBtn.setAttribute("class","signupBtn");
+            nav.appendChild(imageHolder);
+            nav.appendChild(empty);
+            nav.appendChild(loginBtn);
+            nav.appendChild(signupBtn)
+            document.body.insertBefore(nav,document.querySelector(".container"))
+            //image slidar
+ let images=['https://wallpapercave.com/wp/7eHi8np.jpg','https://wallpapercave.com/wp/RLg892V.jpg','https://wallpapercave.com/wp/jCDL6OV.jpg','https://wallpapercave.com/wp/Jp8Zj5f.jpg','https://wallpapercave.com/wp/ALhBOAp.jpg','https://wallpapercave.com/wp/0RQMsOD.jpg','https://wallpapercave.com/wp/ibUxifj.jpg','https://wallpapercave.com/wp/4qzog8d.jpg','https://wallpapercave.com/wp/UKCb90e.jpg']
+var count=0;
+let fetchImage=()=>{
+   if(count===images.length)
+   count=0;
+   document.querySelector('.container').innerHTML=null;
+   let img=document.createElement('img');
+   img.setAttribute("src",images[count]);
+   document.querySelector('.container').appendChild(img);
+   count+=1;
+}
+setInterval(fetchImage,3000)
+// Create a database of movies of your choice. Each movie object will have properties like ‘name, release date, poster (add url of a poster), IMDb rating, etc.
+let movies=function(poster,name,releaseDate,rating){
+this.poster=poster;
+this.name=name;
+this.releaseDate=releaseDate;
+this.rating=rating;
+}
+let movie1=new movies('https://wallpapercave.com/wp/7eHi8np.jpg','ek tha cat','30 september','5 Star')
+let movie2=new movies('https://wallpapercave.com/wp/Ciw293N.jpg','ek tha dog','30 september','5 Star')
+let movie3=new movies('https://wallpapercave.com/wp/RZxqO2S.jpg','ek tha lion','30 september','5 Star')
+let movie4=new movies('https://wallpapercave.com/wp/7eHi8np.jpg','ek tha tiger','30 september','5 Star')
+let movie5=new movies('https://wallpapercave.com/wp/veNtZyl.jpg','ek tha dear','30 september','5 Star')
+let movie6=new movies('https://wallpapercave.com/wp/UeJv6hp.jpg','ek tha cow','30 september','5 Star')
+let movie7=new movies('https://wallpapercave.com/wp/o7zCmCn.jpg','ek tha goat','30 september','5 Star')
+let movie8=new movies('https://wallpapercave.com/wp/amqxmoC.jpg','ek tha rat','30 september','5 Star')
+let movie9=new movies('https://wallpapercave.com/wp/ibUxifj.jpg','ek tha snack','30 september','5 Star')
+let allMovies=[];
+    allMovies.push(movie1)
+    allMovies.push(movie2)
+    allMovies.push(movie3)
+    allMovies.push(movie4)
+    allMovies.push(movie5)
+    allMovies.push(movie6)
+    allMovies.push(movie7)
+    allMovies.push(movie8)
+    allMovies.push(movie9)
+    localStorage.setItem('movies',JSON.stringify(allMovies))
+console.log(allMovies)
+let fetchMovieFromLocalStorage=[];
+if(JSON.parse(localStorage.getItem('movies')))
+ fetchMovieFromLocalStorage=JSON.parse(localStorage.getItem('movies'));
+for(movie in fetchMovieFromLocalStorage){
+    let div=document.createElement('div');
+    let img=document.createElement('img');
+    img.setAttribute('src',fetchMovieFromLocalStorage[movie].poster);
+    let h3=document.createElement('h3');
+    h3.textContent=fetchMovieFromLocalStorage[movie].name;
+    let h5=document.createElement('h5');
+    h5.textContent=`Release Date:${fetchMovieFromLocalStorage[movie].releaseDate}`
+    let h6=document.createElement('h6');
+    h6.textContent=`Rating:${fetchMovieFromLocalStorage[movie].rating}`
+    div.appendChild(img);
+    div.appendChild(h3);
+    div.appendChild(h5);
+    div.appendChild(h6);
+    document.querySelector('.movie_container').appendChild(div);
+}
+
+    </script>
+</body>
+</html>
+<!-- acersupport@in.Aegisglobal.com -->

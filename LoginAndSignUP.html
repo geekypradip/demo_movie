@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <style>
+        body{
+            margin: 0;
+            background: rgba(42, 41, 109, 0.877);
+        }
+        nav{
+            display: flex;
+            background-color: rgb(6, 6, 80);
+            color:#fff;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-weight: bold;
+            position: fixed;
+            top:0;
+            overflow: hidden;
+            width:100%;
+        }
+        nav>.imageHolder{
+            flex: 10%;
+            text-align: center;
+        }
+        nav>.empty{
+            flex:70%;
+          
+        }
+        nav>.loginBtn,nav>.signupBtn{
+            flex:10%;
+            text-align: center;
+            padding-top: 5px;
+
+        }
+        nav>.loginBtn:hover,nav>.signupBtn:hover{
+            border: 1px solid rgb(161, 180, 167);
+        }
+        nav>.signupBtn{
+            background-color: rgb(16, 216, 16);
+            border-radius: 4px;
+        }
+     /*nav bar end*/
+.container{
+    width:60%;
+margin:auto;
+text-align: center;
+margin-top: 100px;
+}
+.login,.signup{
+    background-color: rgba(0, 0, 0, 0.192);
+    color:#fff;
+    width:60%;
+    margin:auto;
+    /* display: none; */
+    
+}
+.login>input,.signup>input{
+    border:none;
+    width:50%;
+    height: 30px;
+    background:transparent;
+    border-bottom: 1px solid rgb(226, 235, 226);
+    color:rgb(145, 240, 240)
+}
+.login>input:hover,.signup>input:hover{
+    
+    border: 1px solid rgb(63, 231, 63);
+}
+.login>div,.signup>div{
+    margin-top: 20px;
+}
+.submit{
+    background-color:green;
+    font-size: 30px;
+    font-weight: bold;
+    border-radius: 4px;
+    border-bottom: 1px solid rgb(161, 180, 167);
+}
+.submit:hover{
+    border: 1px solid rgb(161, 180, 167);
+}
+
+@media screen and (max-width: 750px){
+    .container,.login,.signup{
+    width:80%;
+}
+}
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <!-- In signup.html, a user should be able to signup with details like ‘name, contact no, email, password’. The form should not be submitted if any of the fields are empty. store the user signup data in local storage.
+        In login.html, the user should be able to log in using ‘email and password’ If wrong username/password, alert ‘invalid Credentials’.
+        If login successful, send the user to home.html automatically. -->
+        <div class="login">
+            <h1>LOGIN</h1>
+          <div>Email Address</div>
+          <input type="text" id="login_user" placeholder="Enter email id">
+          <div>password</div>
+          <input type="password" id="password" placeholder="Enter password">
+          <div class="submit" id="login">LOG IN</div>
+        </div>
+
+        <div class="signup">
+            <h1>SIGNUP</h1>
+            <div>Name</div>
+          <input type="text" id="name" placeholder="Enter Name">
+          <div>Contact Number</div>
+          <input type="text" id="contact" placeholder="Enter Contact Number">
+          <div>Email Address</div>
+          <input type="text" id="email" placeholder="Enter email id">
+          <div>password</div>
+          <input type="password" id="pass" placeholder="Enter password">
+          <div class="submit" id="signup">REGISTER</div>
+        </div>
+    </div>
+    <script>
+        document.body.onload=function(){
+ //navbar code start
+            let nav=document.createElement("nav")
+            let imageHolder=document.createElement("div");
+            imageHolder.setAttribute("class","imageHolder")
+            let img=document.createElement('img')
+            img.setAttribute('src',"https://s.imgur.com/images/favicon-32x32.png");
+            imageHolder.appendChild(img);
+            let empty=document.createElement('div');
+            empty.setAttribute("class","empty");
+            let loginBtn=document.createElement('div');
+            loginBtn.textContent="Sign in"
+            loginBtn.setAttribute("class","loginBtn");
+            let signupBtn=document.createElement('div');
+            signupBtn.textContent='Sign up'
+            signupBtn.setAttribute("class","signupBtn");
+            nav.appendChild(imageHolder);
+            nav.appendChild(empty);
+            nav.appendChild(loginBtn);
+            nav.appendChild(signupBtn)
+            document.body.insertBefore(nav,document.querySelector(".container"))
+//nav bar end
+
+//login and signup  dom manipulation start 
+            document.querySelector(".signup").style.display="none";
+           loginBtn.addEventListener('click',function(){
+               document.querySelector(".signup").style.display="none";
+               document.querySelector('.login').style.display="block";
+               document.title=`login`;
+           })
+           signupBtn.addEventListener('click',function(){
+            document.querySelector('.login').style.display="none";
+            document.querySelector(".signup").style.display="block";
+            document.title=`Register`;
+           })
+//login and signup  dom manipulation end
+
+let fetchUserData=[];
+if(JSON.parse(localStorage.getItem("userData")))
+fetchUserData=JSON.parse(localStorage.getItem("userData"))//fetching all data from loacl storage
+console.log(fetchUserData)//just for checking!!
+//SIGNUP HANDLE START AND INSERTING DATA INTO LOCAL STORAGE
+document.getElementById("signup").onclick=function(){
+    let name=document.getElementById("name").value;
+    let conatctNumber=document.getElementById('contact').value;
+    let email=document.getElementById("email").value;
+    let password=document.getElementById('pass').value;
+    if(!name||!conatctNumber||!email||!password)
+    alert("ALl FILEDS ARE REQUIRED!! ")
+else{
+
+    function registerUserList(name,conatctNumber,email, password){
+    this.name=name;
+    this.conatctNumber=conatctNumber;
+    this.email=email;
+    this.password=password;
+}
+for(e in fetchUserData){
+    if(fetchUserData[e].email===email){
+        alert("user alrey registerd! go and log in");
+    return;
+    }
+    
+}
+   var user=new registerUserList(name,conatctNumber,email,password)  ;
+   fetchUserData.push(user)
+  localStorage.setItem("userData",JSON.stringify(fetchUserData))
+}
+}//SIGNUP END
+//login start
+document.getElementById("login").onclick=function(){
+    let userId=document.getElementById("login_user").value;
+    let password=document.getElementById("password").value;
+    if(!userId||!password){
+        alert("ALL FILEDS ARE REQUIRED!");
+        return;
+    }
+    for(user in fetchUserData){
+        if(fetchUserData[user].email===userId&&fetchUserData[user].password===password){
+            window.location.href="home.html"
+            return;
+        }
+    }
+    alert("invalid email address or password!")
+}//login end
+        }//main bracket i.e onload() don't remove
+    </script>
+</body>
+
+</html>

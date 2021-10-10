@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>navbar</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        nav{
+            display: flex;
+            background-color: rgb(6, 6, 80);
+            color:#fff;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-weight: bold;
+            position: fixed;
+            top:0;
+            overflow: hidden;
+            width:100%;
+        }
+        nav>.imageHolder{
+            flex: 10%;
+            text-align: center;
+        }
+        nav>.empty{
+            flex:70%;
+          
+        }
+        nav>.loginBtn,nav>.signupBtn{
+            flex:10%;
+            text-align: center;
+            padding-top: 5px;
+
+        }
+        nav>.signupBtn{
+            background-color: rgb(16, 216, 16);
+            border-radius: 4px;
+        }
+     
+        nav>.loginBtn:hover,nav>.signupBtn:hover{
+            border: 1px solid rgb(161, 180, 167);
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+
+    </div>
+    <script>
+        document.body.onload=function(){
+            let nav=document.createElement("nav")
+            let imageHolder=document.createElement("div");
+            imageHolder.setAttribute("class","imageHolder")
+            let img=document.createElement('img')
+            img.setAttribute('src',"https://s.imgur.com/images/favicon-32x32.png");
+            imageHolder.appendChild(img);
+            let empty=document.createElement('div');
+            empty.setAttribute("class","empty");
+            let loginBtn=document.createElement('div');
+            loginBtn.textContent="Sign in"
+            loginBtn.setAttribute("class","loginBtn");
+            let signupBtn=document.createElement('div');
+            signupBtn.textContent='Sign up'
+            signupBtn.setAttribute("class","signupBtn");
+            nav.appendChild(imageHolder);
+            nav.appendChild(empty);
+            nav.appendChild(loginBtn);
+            nav.appendChild(signupBtn)
+            document.body.insertBefore(nav,document.querySelector(".container"))
+        }
+    </script>
+</body>
+
+</html>
